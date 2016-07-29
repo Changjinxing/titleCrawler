@@ -43,7 +43,10 @@ class Spider:
 		if page_url not in Spider.crawled:
 			print(thread_name + ' now crawling ' + page_url)
 			print('Queue ' + str(len(Spider.queue)) + ' | Crawled  ' + str(len(Spider.crawled)))
-			#Spider.add_links_to_queue(page_url)
+			#Spider.filter_links(page_url)
+			if page_url in Spider.crawled:
+				Spider.queue.remove(page_url)
+				return
 			Spider.queue.remove(page_url)
 			Spider.crawled.append(page_url)
 			db_id = len(Spider.crawled)
@@ -53,9 +56,10 @@ class Spider:
 			return title
 
 	@staticmethod
-	def add_links_to_queue(links):
+	def filter_links(links):
 		for url in links:
 			if url in Spider.queue:
+				Spider.queue.remove
 				continue
 			if url in Spider.crawled:
 				continue
