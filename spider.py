@@ -25,6 +25,8 @@ class Spider:
 		try:
 			page = urllib2.urlopen(url).read()
 			soup = BeautifulSoup(page, "html5lib")
+			if soup.title is None:
+				return 'title is not exist'
 			title = soup.title.string
 		except IOError:
 			title = ('ERROR: invalid URL "%s"' % url)
