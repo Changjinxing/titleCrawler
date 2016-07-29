@@ -27,9 +27,11 @@ class Spider:
 			soup = BeautifulSoup(page, "html5lib")
 			if soup.title is None:
 				return 'title is not exist'
-			title = str(soup.title.string)
+			title = soup.title.string
 		except IOError:
 			title = ('ERROR: invalid URL "%s"' % url)
+		title = title.replace("'", '-')
+		title = title.replace('"', '-')
 		return title
 
 	@staticmethod
@@ -37,6 +39,7 @@ class Spider:
 		sqlite_db = sqlite3.connect(db_path)
 		sqlite_cu = sqlite_db.cursor()
 		sql_str= "insert into " + str(table_name) + " values(" + str(id) + ", '" + str(url) + "', '" + str(title) + "')"
+		#print sql_str
 		sqlite_cu.execute(sql_str)
 		sqlite_db.commit()
 
@@ -53,7 +56,7 @@ class Spider:
 			Spider.crawled.append(page_url)
 			db_id = len(Spider.crawled)
 
-			title = str(Spider.getTitle(page_url))
+			title = Spider.getTitle(page_url)
 			Spider.update_db(db_path, table_name, db_id, page_url, title)
 			return title
 
