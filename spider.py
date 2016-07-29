@@ -28,17 +28,19 @@ class Spider:
 			if soup.title is None:
 				return 'title is not exist'
 			title = soup.title.string
+			if title is None:
+				return 'title is not exist'
+			title = title.replace("'", '-')
+			title = title.replace('"', '-')
 		except IOError:
 			title = ('ERROR: invalid URL "%s"' % url)
-		title = title.replace("'", '-')
-		title = title.replace('"', '-')
 		return title
 
 	@staticmethod
 	def update_db(db_path, table_name, id, url, title):
 		sqlite_db = sqlite3.connect(db_path)
 		sqlite_cu = sqlite_db.cursor()
-		sql_str= "insert into " + str(table_name) + " values(" + str(id) + ", '" + str(url) + "', '" + str(title) + "')"
+		sql_str= "insert into " + table_name + " values(" + str(id) + ", '" + url + "', '" + title + "')"
 		#print sql_str
 		sqlite_cu.execute(sql_str)
 		sqlite_db.commit()
