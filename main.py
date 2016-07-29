@@ -20,7 +20,7 @@ DB_FILE_PATH = DB_PATH + DB_FILE_NAME
 
 queue_links = file_to_arr(QUEUE_FILE_PATH)
 queue = Queue.Queue()
-Spider(QUEUE_FILE_PATH)
+Spider(queue_links)
 
 # Create worker threads (will die when main exits)
 def create_workers():
@@ -65,5 +65,5 @@ finish_time = clock()
 print finish_time
 #print(finish_time - start_time)
 
-sqlite_cu.execute("select * from url_title_rel")
-print sqlite_cu.fetchall()
+#sqlite_cu.execute("select * from url_title_rel")
+#print sqlite_cu.fetchall()

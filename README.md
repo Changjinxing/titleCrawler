@@ -15,9 +15,11 @@ python main.py
 - if you have any confusion about the titleCrawler
 
 
+---
+- add exception handling, you need keep in mind that the data never be nice when you crawling the real data or facing the read world. keep in mind. keep in mind. keep in mind.
 
 ```
-date: 2016/07/28
+date: 2016/07/29
 authour: zhangjinxing
 email: jinxingbay@163.com
 tell: 15600616254

@@ -7,17 +7,20 @@ import sqlite3
 
 class Spider:
 	# Class variables (shared among all instances)
-	queue_file = ''
+	#queue_file = ''
 	queue = []
 	crawled = []
 
-	def __init__(self, queue_file):
-		Spider.queue_file = queue_file
+	def __init__(self, queue):
+		if type(queue) is 'str':
+			Spider.queue = [queue]
+		else:
+			Spider.queue = queue
 		self.boot()
 
 	@staticmethod
 	def boot():
-		Spider.queue = file_to_arr(Spider.queue_file)
+		#Spider.queue = file_to_arr(Spider.queue_file)
 		Spider.crawled = []
 
 	@staticmethod
@@ -47,6 +50,9 @@ class Spider:
 
 	@staticmethod
 	def crawl_page(thread_name, page_url, db_path, table_name):
+		if type(Spider.queue) is 'str':
+			Spider.queue = [Spider.queue]
+
 		if page_url not in Spider.crawled:
 			print(thread_name + ' now crawling ' + page_url)
 			print('Queue ' + str(len(Spider.queue)) + ' | Crawled  ' + str(len(Spider.crawled)))
@@ -59,6 +65,8 @@ class Spider:
 			db_id = len(Spider.crawled)
 
 			title = Spider.getTitle(page_url)
+			if type(title) is 'None':
+				title = str('no title')
 			Spider.update_db(db_path, table_name, db_id, page_url, title)
 			return title
 
