@@ -24,7 +24,8 @@ class Spider:
 	@staticmethod
 	def getTitle(url):
 		try:
-			page = urllib2.urlopen(url).read()
+			resource = urllib2.urlopen(url)
+			page = resource.read()
 			soup = BeautifulSoup(page, "html5lib")
 			if soup.title is None:
 				return 'title is not exist'
@@ -33,6 +34,7 @@ class Spider:
 				return 'title is not exist'
 			title = title.replace("'", '-')
 			title = title.replace('"', '-')
+			resource.close()
 		except IOError:
 			title = ('ERROR: invalid URL "%s"' % url)
 		return title
