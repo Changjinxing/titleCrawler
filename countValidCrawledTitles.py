@@ -22,6 +22,10 @@ cu = cx.cursor()
 sql_str = 'select * from ' + table_name
 cu.execute(sql_str)
 urls = cu.fetchall()
+
+num_db = len(urls)
+print "items' count in db is(contain EMPTY title): ", num_db
+
 for url in urls:
         if "ERROR" in url[2]:
                 urls.remove(url)
