@@ -18,6 +18,30 @@ python main.py
 ---
 - add exception handling, you need keep in mind that the data never be nice when you crawling the real data or facing the read world. keep in mind. keep in mind. keep in mind.
 
+---
+- countValidCrawledTitles.py usage:
+```
+python countValidCrawledTitles.py db_path table_name
+eq:
+python countValidCrawledTitles.py test_db url_title_rel
+```
+- makeFakeUrls.py usage:
+```
+python makeFakeUrls.py filepath start_index write_cnt
+eq:
+python makeFakeUrls.py test.csv 1 100
+```
+- main.py usage(run in the background):
+```
+nice -n x nohup python main.py &
+x is the number of the nice value, max is -20, min is 19
+eq: 
+nice -n -16 nohup python main.py &
+you can trace the log dynamic by using: 
+tail -f nohup.out
+```
+
+---
 ```
 date: 2016/07/29
 authour: zhangjinxing
