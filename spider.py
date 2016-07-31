@@ -4,7 +4,8 @@ from bs4 import  BeautifulSoup,BeautifulStoneSoup
 import urllib2
 import html5lib
 import sqlite3
-import time
+from time import sleep, time
+import gc
 
 class Spider:
 	# Class variables (shared among all instances)
@@ -64,9 +65,16 @@ class Spider:
 			title = Spider.getTitle(page_url)
 			Spider.update_db(db_path, table_name, db_id, page_url, title)
 
-			if len(Spider.crawled)%1000 == 0:
-				time.sleep(180)
+			if len(Spider.crawled) != 0 and len(Spider.crawled)%1000 == 0:
+				sleep(60)
+				Spider.free()
 			return title
+
+        @staticmethod
+        def free():
+                #del Spider.queue
+                #del Spider.crawled
+                gc.collect()
 
 	@staticmethod
 	def filter_links(links):
